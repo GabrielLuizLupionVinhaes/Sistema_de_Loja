@@ -13,9 +13,11 @@ namespace LojaCL
 {
     public partial class FrmCrudUsuario : Form
     {
+        private Cripto b;
         public FrmCrudUsuario()
         {
             InitializeComponent();
+            b = new Cripto();
         }
 
         public void CarregaDgvUsuario()
@@ -47,7 +49,8 @@ namespace LojaCL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@nome", txtNome.Text);
                 cmd.Parameters.AddWithValue("@login", txtLogin.Text);
-                cmd.Parameters.AddWithValue("@senha", txtSenha.Text);
+                cmd.Parameters.AddWithValue("@senha", txtSenha.Text = b.Base64Encode(txtSenha.Text));
+                //txtSenha.Text = b.Base64Encode(txtSenha.Text);
                 clConexao.ObterConexao();
                 cmd.ExecuteNonQuery();
                 CarregaDgvUsuario();

@@ -13,9 +13,11 @@ namespace LojaCL
 {
     public partial class FrmLogin : Form
     {
+        private Cripto b;
         public FrmLogin()
         {
             InitializeComponent();
+            b = new Cripto();
         }
 
         private void btnSair_Click(object sender, EventArgs e)
@@ -30,7 +32,8 @@ namespace LojaCL
             string usu = "select login,senha from usuario where login=@login and senha=@senha";
             SqlCommand cmd = new SqlCommand(usu, con);
             cmd.Parameters.AddWithValue("@login",SqlDbType.NChar).Value = txtLogin.Text.Trim();
-            cmd.Parameters.AddWithValue("@senha", SqlDbType.NChar).Value = txtSenha.Text.Trim();
+            //cmd.Parameters.AddWithValue("@senha", SqlDbType.NChar).Value = txtSenha.Text.Trim();
+            cmd.Parameters.AddWithValue("@senha", SqlDbType.NChar).Value = txtSenha.Text = b.Base64Encode(txtSenha.Text);
             clConexao.ObterConexao();
             cmd.CommandType = CommandType.Text;
             SqlDataReader usuario = cmd.ExecuteReader();
