@@ -8,15 +8,18 @@ namespace LojaCL
 {
     public class Cripto
     {
-        public string Base64Encode(string textoencode)
+        //Método usado para criptografar, pode ser internal, public, private...
+        public string Base64Encode(string texto)
         {
-            var textoencodebytes = System.Text.Encoding.UTF8.GetBytes(textoencode);
-            return System.Convert.ToBase64String(textoencodebytes);
+            var textoencode = System.Text.Encoding.UTF8.GetBytes(texto);
+            return System.Convert.ToBase64String(textoencode);
         }
-        public string Base64Decode(string textodecode)
+
+        //Método usado para descriptografar, pode ser internal, public, private...
+        public string Base64Decode(string textodata)
         {
-            var textodecodebytes = System.Convert.FromBase64String(textodecode);
-            return System.Text.Encoding.UTF8.GetString(textodecodebytes);
+            var textodecode = System.Convert.FromBase64String(textodata);
+            return System.Text.Encoding.UTF8.GetString(textodecode);
         }
     }
 }

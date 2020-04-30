@@ -20,16 +20,16 @@ namespace LojaCL
 
         public void CarregaDgvProduto()
         {
-            SqlConnection con = clConexao.ObterConexao();
+            SqlConnection con = Conexao.obterConexao();
             String query = "select * from produto";
             SqlCommand cmd = new SqlCommand(query, con);
-            clConexao.ObterConexao();
+            Conexao.obterConexao();
             cmd.CommandType = CommandType.Text;
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             DataTable produto = new DataTable();
             da.Fill(produto);
             DgvProduto.DataSource = produto;
-            clConexao.fecharConexao();
+            Conexao.fecharConexao();
         }
 
         private void btnSair_Click(object sender, EventArgs e)
@@ -41,7 +41,7 @@ namespace LojaCL
         {
             try
             {
-                SqlConnection con = clConexao.ObterConexao();
+                SqlConnection con = Conexao.obterConexao();
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "InserirProduto";
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -49,11 +49,11 @@ namespace LojaCL
                 cmd.Parameters.AddWithValue("@tipo", txtTipo.Text);
                 cmd.Parameters.AddWithValue("@quantidade", txtQuantidade.Text);
                 cmd.Parameters.Add("@valor", SqlDbType.Decimal,3).Value = txtValor.Text;
-                clConexao.ObterConexao();
+                Conexao.obterConexao();
                 cmd.ExecuteNonQuery();
                 CarregaDgvProduto();
                 MessageBox.Show("Registro inserido com sucesso!", "Cadastro", MessageBoxButtons.OK);
-                clConexao.fecharConexao();
+                Conexao.fecharConexao();
                 txtId.Text = "";
                 txtNome.Text = "";
                 txtTipo.Text = "";
@@ -70,8 +70,7 @@ namespace LojaCL
         {
             try
             {
-
-                SqlConnection con = clConexao.ObterConexao();
+                SqlConnection con = Conexao.obterConexao();
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "AtualizarProduto";
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -80,11 +79,11 @@ namespace LojaCL
                 cmd.Parameters.AddWithValue("@tipo", this.txtTipo.Text);
                 cmd.Parameters.AddWithValue("@quantidade", this.txtQuantidade.Text);
                 cmd.Parameters.Add("@valor", SqlDbType.Decimal, 3).Value = txtValor.Text;
-                clConexao.ObterConexao();
+                Conexao.obterConexao();
                 cmd.ExecuteNonQuery();
                 CarregaDgvProduto();
                 MessageBox.Show("Registro atualizado com sucesso!", "Atualizar Registro", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                clConexao.fecharConexao();
+                Conexao.fecharConexao();
                 txtId.Text = "";
                 txtNome.Text = "";
                 txtTipo.Text = "";
@@ -101,16 +100,16 @@ namespace LojaCL
         {
             try
             {
-                SqlConnection con = clConexao.ObterConexao();
+                SqlConnection con = Conexao.obterConexao();
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "ExcluirProduto";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", this.txtId.Text);
-                clConexao.ObterConexao();
+                Conexao.obterConexao();
                 cmd.ExecuteNonQuery();
                 CarregaDgvProduto();
                 MessageBox.Show("Registro apagado com sucesso!", "Excluir Registro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                clConexao.fecharConexao();
+                Conexao.fecharConexao();
                 txtId.Text = "";
                 txtNome.Text = "";
                 txtTipo.Text = "";
@@ -127,12 +126,12 @@ namespace LojaCL
         {
             try
             {
-                SqlConnection con = clConexao.ObterConexao();
+                SqlConnection con = Conexao.obterConexao();
                 SqlCommand cmd = con.CreateCommand();
                 cmd.CommandText = "LocalizarProduto";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Id", this.txtId.Text);
-                clConexao.ObterConexao();
+                Conexao.obterConexao();
                 SqlDataReader rd = cmd.ExecuteReader();
                 if (rd.Read())
                 {
@@ -141,10 +140,12 @@ namespace LojaCL
                     txtTipo.Text = rd["tipo"].ToString();
                     txtQuantidade.Text = rd["quantidade"].ToString();
                     txtValor.Text = rd["valor"].ToString();
+                    Conexao.fecharConexao();
                 }
                 else
                 {
                     MessageBox.Show("Nenhum registro encontrado!", "Sem registro!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Conexao.fecharConexao();
                 }
             }
             finally
