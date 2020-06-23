@@ -69,7 +69,7 @@ namespace LojaCL
                 SqlCommand cmd = new SqlCommand(query, con);
                 Conexao.obterConexao();
                 DataSet ds = new DataSet();
-                MessageBox.Show("Conectado ao Banco de Dados com Sucesso!", "Teste de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Information) ;
+                MessageBox.Show("Conectado ao Banco de Dados com Sucesso!", "Teste de Conexão", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Conexao.fecharConexao();
             }
             catch (Exception er)
@@ -110,7 +110,8 @@ namespace LojaCL
                 {
                     if(Application.OpenForms["FrmVenda"] == null)
                     {
-                        FrmVenda ven = new FrmVenda();
+                        string numero = dgvPripedi[1, e.RowIndex].Value.ToString();
+                        FrmVenda ven = new FrmVenda(numero);
                         ven.Show();
                     }
                 }
@@ -124,12 +125,31 @@ namespace LojaCL
         private void FrmPrincipal_Load(object sender, EventArgs e)
         {
             CarregadgvPripedi();
+            //this.reportViewer1.RefreshReport();
         }
 
         private void pedidosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FrmPedido ped = new FrmPedido();
             ped.Show();
+        }
+
+        private void cartaoVendaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmRelCartaoVenda relcar = new FrmRelCartaoVenda();
+            relcar.Show();
+        }
+
+        private void usuarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmRelUsuario1 relusu = new FrmRelUsuario1();
+            relusu.Show();
+        }
+
+        private void vendaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmRelVenda relven = new FrmRelVenda();
+            relven.Show();
         }
     }
 }
